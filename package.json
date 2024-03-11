@@ -1,0 +1,25 @@
+{
+  "name": "front-end-react",
+  "version": "1.0.0",
+  "description": "Front-end em React com aplicação de arquitetura limpa e testes unitários",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizotavioautomacao/front-end-react.git"
+  },
+  "keywords": [
+    "front-end",
+    "react",
+    "clean-code",
+    "TDD"
+  ],
+  "author": "Luiz Otávio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luizotavioautomacao/front-end-react/issues"
+  },
+  "homepage": "https://github.com/luizotavioautomacao/front-end-react#readme"
+}
