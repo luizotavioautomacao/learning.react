@@ -28,6 +28,7 @@
   "homepage": "https://github.com/luizotavioautomacao/front-end-react#readme",
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.25",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
@@ -42,5 +43,8 @@
     "lint-staged": "^15.2.2",
     "ts-jest": "^29.1.2",
     "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "axios": "^1.6.7"
   }
 }
