@@ -10,10 +10,11 @@ export class RemoteAuthentication {
         private readonly url: string,
         private readonly httpPostClient: HttpPostClient<AuthenticationParams, AccountModel>
     ) { }
-    async auth(params: AuthenticationParams): Promise<void> {
+    async auth(params: AuthenticationParams): Promise<AccountModel> {
         const htppResponse = await this.httpPostClient.post({ url: this.url, body: params })
+
         switch (htppResponse.statusCode) {
-            case HttpStatusCode.ok: break
+            case HttpStatusCode.ok: return htppResponse.body
             case HttpStatusCode.unauthorized: throw new InvalidCredentialsError()
             case HttpStatusCode.badRequest: throw new UnexpectedError()
             default: throw new UnexpectedError()

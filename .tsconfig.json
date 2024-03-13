@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+      "strict": true,
+      "strictNullChecks": false,
       "target": "es5",
       "lib": ["dom", "dom.iterable", "esnext"],
       "esModuleInterop": true,
@@ -14,7 +16,6 @@
       "allowJs": true,
       "skipLibCheck": true,
       "allowSyntheticDefaultImports": true,
-      "strict" :true,
       "forceConsistentCasingInFileNames": true,
       "resolveJsonModule": true,
       "isolatedModules": true,
