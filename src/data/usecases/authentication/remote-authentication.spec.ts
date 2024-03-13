@@ -1,9 +1,10 @@
 import { mockAuthentication } from "../../../domain/test/mock-authentication";
 import { InvalidCredentialsError } from "../../../domain/errors/invalid-credencials-error";
+import { UnexpectedError } from "../../../domain/errors/unexpected-error";
 import { HttpClientSpy } from "../../../data/test/mock-http-client";
 import { RemoteAuthentication } from "./../../../data/usecases/authentication/remote-authentication";
+import { HttpStatusCode } from "../../../data/protocols/http/http-response";
 import { faker } from '@faker-js/faker';
-import { HttpStatusCode } from "../../protocols/http/http-response";
 
 type SutTypes = {
     sut: RemoteAuthentication,
@@ -42,6 +43,33 @@ describe('RemoteAuthentication', () => {
         }
         const promise = sut.auth(mockAuthentication())
         await expect(promise).rejects.toThrow(new InvalidCredentialsError())
+    });
+
+    test('Should throw UnexpectedError if HttpPostClient with returns 400', async () => {
+        const { sut, httpPostClientSpy } = makeSut()
+        httpPostClientSpy.response = {
+            statusCode: HttpStatusCode.badRequest
+        }
+        const promise = sut.auth(mockAuthentication())
+        await expect(promise).rejects.toThrow(new UnexpectedError())
+    });
+
+    test('Should throw UnexpectedError if HttpPostClient with returns 404', async () => {
+        const { sut, httpPostClientSpy } = makeSut()
+        httpPostClientSpy.response = {
+            statusCode: HttpStatusCode.notFound
+        }
+        const promise = sut.auth(mockAuthentication())
+        await expect(promise).rejects.toThrow(new UnexpectedError())
+    });
+
+    test('Should throw UnexpectedError if HttpPostClient with returns 500', async () => {
+        const { sut, httpPostClientSpy } = makeSut()
+        httpPostClientSpy.response = {
+            statusCode: HttpStatusCode.serverError
+        }
+        const promise = sut.auth(mockAuthentication())
+        await expect(promise).rejects.toThrow(new UnexpectedError())
     });
 
 });
