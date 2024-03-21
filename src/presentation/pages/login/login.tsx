@@ -1,9 +1,6 @@
 import React from "react";
 import Styles from "./login-styles.scss";
-import Header from "@/presentation/components/header/header";
-import Footer from "@/presentation/components/footer/footer";
-import Input from "@/presentation/components/input/input";
-import FormStatus from "@/presentation/components/form-status/form-status";
+import { Header, Footer, Input, FormStatus } from "@/presentation/components";
 
 const Login: React.FC = () => {
   return (
@@ -13,7 +10,9 @@ const Login: React.FC = () => {
         <h2>Login</h2>
         <Input type="email" name="email" placeholder="Digite seu e-mail" />
         <Input type="password" name="password" placeholder="Digite sua senha" />
-        <button className={Styles.submit} type="submit">Entrar</button>
+        <button className={Styles.submit} type="submit">
+          Entrar
+        </button>
         <span className={Styles.link}>Criar conta</span>
         <FormStatus />
       </form>
