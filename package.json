@@ -30,6 +30,7 @@
   "homepage": "https://github.com/luizotavioautomacao/front-end-react#readme",
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@testing-library/react": "^15.0.6",
     "@types/axios": "^0.14.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.25",
