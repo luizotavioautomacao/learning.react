@@ -2,6 +2,7 @@ import React from 'react'
 import { RenderResult, fireEvent, render } from '@testing-library/react'
 import Login from "./login"
 import { ValidationSpy } from '@/presentation/test'
+import { inputGetStatus } from '@/presentation/components/input/input'
 
 type SutTypes = {
     // authenticationSpy: AuthenticationSpy
@@ -19,6 +20,7 @@ type SutParams = {
 const makeSut = (params?: SutParams): SutTypes => {
     // const authenticationSpy = new AuthenticationSpy()
     const validationSpy = new ValidationSpy()
+    validationSpy.errorMessage = 'Mensagem de erro!'
     const sut = render(<Login validation={validationSpy} />)
     return {
         sut,
@@ -50,9 +52,9 @@ describe('Login Component', () => {
     })
 
     // test('Should correct inicial state from email', () => {
-    //     const { getByTestId } = render(<Login />)
+    //     const { getByTestId, validationSpy } = render(<Login />)
     //     const emailStatus = getByTestId('email-status')
-    //     expect(emailStatus.title).toBe('Campo obrigatório')
+    //     expect(emailStatus.title).toBe(validationSpy.errorMessage)
     //     expect(emailStatus.textContent).toBe('[x]')
     // })
 
@@ -79,4 +81,33 @@ describe('Login Component', () => {
         expect(validationSpy.fildName).toBe('password')
         expect(validationSpy.fieldValue).toBe('any_password')
     })
+
+    test('Should show email error if Validation fails', () => {
+        const { sut, validationSpy } = makeSut()
+        const emailInput = sut.getByTestId('email')
+        fireEvent.input(emailInput, { target: { value: 'any_email' } })
+        const emailStatus = sut.getByTestId('email-status')
+        expect(emailStatus.title).toBe(validationSpy.errorMessage)
+        expect(emailStatus.textContent).toBe(inputGetStatus())
+    })
+
+    // test('Should show valid email state if Validation succeds', () => {
+    //     const { sut, validationSpy } = makeSut()
+    //     validationSpy.errorMessage = null
+    //     const emailInput = sut.getByTestId('email')
+    //     fireEvent.input(emailInput, { target: { value: 'any_email' } })
+    //     const emailStatus = sut.getByTestId('email-status')
+    //     expect(emailStatus.title).toBe('Tudo certo!')
+    //     expect(emailStatus.textContent).toBe(inputGetStatus())
+    // })
+
+    // test('Should show valid password state if Validation succeds', () => {
+    //     const { sut, validationSpy } = makeSut()
+    //     validationSpy.errorMessage = null
+    //     const passwordInput = sut.getByTestId('password')
+    //     fireEvent.input(passwordInput, { target: { value: 'any_password' } })
+    //     const passwordStatus = sut.getByTestId('password-status')
+    //     expect(passwordStatus.title).toBe('Tudo certo!')
+    //     expect(passwordStatus.textContent).toBe(inputGetStatus())
+    // })
 })

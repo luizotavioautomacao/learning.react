@@ -5,7 +5,7 @@ import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from "@/presentation/protocols/validation";
 
 type Props = {
-  validation: Validation
+  validation?: Validation
 }
 
 const Login: React.FC<Props> = ({ validation }: Props) => {
@@ -20,11 +20,14 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
   })
 
   useEffect(() => {
-    validation.validate('email', state.email)
+    setState({
+      ...state,
+      emailError: validation?.validate('email', state.email)
+    })
   }, [state.email])
 
   useEffect(() => {
-    validation.validate('password', state.password)
+    validation?.validate('password', state.password)
   }, [state.password])
 
   return (
@@ -33,8 +36,8 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
       <Context.Provider value={{ state, setState }}>
         <form className={Styles.form}>
           <h2>Login</h2>
-          <Input data-testid="email-status" type="email" name="email" placeholder="Digite seu e-mail" />
-          <Input data-testid="password-status" type="password" name="password" placeholder="Digite sua senha" />
+          <Input type="email" name="email" placeholder="Digite seu e-mail" />
+          <Input type="password" name="password" placeholder="Digite sua senha" />
           <button data-testid="submit" className={Styles.submit} type="submit" disabled>
             Entrar
           </button>

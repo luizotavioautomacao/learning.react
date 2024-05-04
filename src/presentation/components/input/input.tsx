@@ -4,9 +4,13 @@ import Context from '@/presentation/contexts/form/form-context'
 
 type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
-const Spinner: React.FC<Props> = (props: Props) => {
+export const inputGetStatus = (): string => {
+  return '[x]'
+}
 
-  const { state, setState } = useContext(Context)
+const Input: React.FC<Props> = (props: Props) => {
+
+  const { state, setState } = useContext(Context) // contexto criado em Login
   const error = state[`${props.name}Error`]
 
   const enableInput = (event: React.FocusEvent<HTMLInputElement>): void => {
@@ -21,17 +25,20 @@ const Spinner: React.FC<Props> = (props: Props) => {
   }
 
   const getStatus = (): string => {
-    return '[x]'
+    return error? '[x]': '[v]'
   }
+
   const getTitle = (): string => {
     return error
   }
+  
   return (
     <div className={Styles.inputWrap}>
+      {<label>data-testid={props.name}</label>}
       <input {...props} data-testid={props.name} readOnly onFocus={enableInput} onChange={handleChange} />
-      <span title={getTitle()} className={Styles.status}>{getStatus()}</span>
+      <span data-testid={`${props.name}-status`} title={getTitle()} className={Styles.status}>{getStatus()}</span>
     </div>
   );
 };
 
-export default Spinner;
+export default Input;
