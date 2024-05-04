@@ -5,12 +5,14 @@ import Context from '@/presentation/contexts/form/form-context'
 
 type StateProps = {
   isLoading: boolean
+  errorMessage: string
 }
 
 const Login: React.FC = () => {
 
   const [state] = useState<StateProps>({
-    isLoading: false
+    isLoading: false,
+    errorMessage: ''
   })
 
   return (
