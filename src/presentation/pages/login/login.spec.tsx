@@ -16,11 +16,10 @@ type SutParams = {
 }
 
 
-
 const makeSut = (params?: SutParams): SutTypes => {
     // const authenticationSpy = new AuthenticationSpy()
     const validationSpy = new ValidationSpy()
-    validationSpy.errorMessage = 'Mensagem de erro!'
+    validationSpy.errorMessage = params?.validationError
     const sut = render(<Login validation={validationSpy} />)
     return {
         sut,
@@ -40,27 +39,27 @@ const makeSut = (params?: SutParams): SutTypes => {
 
 describe('Login Component', () => {
     test('Should not render spinner and error on start', () => {
-        const { sut } = makeSut()
+        const { sut } = makeSut({ validationError: 'Mensagem de erro!' })
         const errorWrap = sut.getByTestId('error-wrap')
         expect(errorWrap.childElementCount).toBe(0)
     })
 
     test('Should not submit button start actived', () => {
-        const { sut } = makeSut()
+        const { sut } = makeSut({ validationError: 'Mensagem de erro!' })
         const submitButton = sut.getByTestId('submit') as HTMLButtonElement
         expect(submitButton.disabled).toBe(true)
     })
 
-    // test('Should correct inicial state from email', () => {
-    //     const { getByTestId, validationSpy } = render(<Login />)
-    //     const emailStatus = getByTestId('email-status')
-    //     expect(emailStatus.title).toBe(validationSpy.errorMessage)
-    //     expect(emailStatus.textContent).toBe('[x]')
-    // })
+    test('Should correct inicial state from email', () => {
+        const { sut } = makeSut()
+        const emailStatus = sut.getByTestId('email-status')
+        expect(emailStatus.title).toBe('Campo obrigatório')
+        expect(emailStatus.textContent).toBe('[x]')
+    })
 
     // test('Should correct inicial state from password', () => {
-    //     const { getByTestId } = render(<Login />)
-    //     const passwordStatus = getByTestId('password-status')
+    //     const { sut } = makeSut()
+    //     const passwordStatus = sut.getByTestId('password-status')
     //     expect(passwordStatus.title).toBe('Campo obrigatório')
     //     expect(passwordStatus.textContent).toBe('[x]')
     // })
@@ -83,6 +82,7 @@ describe('Login Component', () => {
 
     test('Should show email error if Validation fails', () => {
         const { sut, validationSpy } = makeSut()
+        validationSpy.errorMessage = 'Mensagem de erro!'
         const emailInput = sut.getByTestId('email')
         fireEvent.input(emailInput, { target: { value: 'any_email' } })
         const emailStatus = sut.getByTestId('email-status')
@@ -91,8 +91,7 @@ describe('Login Component', () => {
     })
 
     // test('Should show valid email state if Validation succeds', () => {
-    //     const { sut, validationSpy } = makeSut()
-    //     validationSpy.errorMessage = null
+    //     const { sut, } = makeSut()
     //     const emailInput = sut.getByTestId('email')
     //     fireEvent.input(emailInput, { target: { value: 'any_email' } })
     //     const emailStatus = sut.getByTestId('email-status')
@@ -101,8 +100,7 @@ describe('Login Component', () => {
     // })
 
     // test('Should show valid password state if Validation succeds', () => {
-    //     const { sut, validationSpy } = makeSut()
-    //     validationSpy.errorMessage = null
+    //     const { sut } = makeSut()
     //     const passwordInput = sut.getByTestId('password')
     //     fireEvent.input(passwordInput, { target: { value: 'any_password' } })
     //     const passwordStatus = sut.getByTestId('password-status')
@@ -111,8 +109,7 @@ describe('Login Component', () => {
     // })
 
     test('Should enable submit button if form is valid', () => {
-        const { sut, validationSpy } = makeSut()
-        validationSpy.errorMessage = null
+        const { sut } = makeSut()
         const emailInput = sut.getByTestId('email')
         const passwordInput = sut.getByTestId('password')
         fireEvent.input(emailInput, { target: { value: 'any_email' } })

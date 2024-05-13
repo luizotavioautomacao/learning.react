@@ -4,6 +4,7 @@ import { Header, Footer, Input, FormStatus } from "@/presentation/components";
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from "@/presentation/protocols/validation";
 
+const log = true
 type Props = {
   validation?: Validation
 }
@@ -20,16 +21,21 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
   })
 
   useEffect(() => {
+    log ? console.log(1, state) : null
     setState({
       ...state,
       emailError: validation?.validate('email', state.email),
       passwordError: validation?.validate('password', state.password)
     })
-  }, [state.email,state.password])
+  }, [state.email])
 
-  // useEffect(() => {
-  //   validation?.validate('password', state.password)
-  // }, [state.password])
+  useEffect(() => {
+    log ? console.log(2, state) : null
+    setState({
+      ...state,
+      passwordError: validation?.validate('password', state.password)
+    })
+  }, [state.password])
 
   return (
     <div className={Styles.login}>
@@ -39,11 +45,8 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
           <Input type="password" name="password" placeholder="Digite sua senha" />
-          <button data-testid="submit" className={Styles.submit} type="submit" disabled={!!state.emailError || !!state.passwordError}>
+          <button data-testid="submit" className={Styles.submit} type="submit" disabled={!state.email || !state.password}>
             Entrar
-            {/* <br></br>
-            email:{state.emailError}<br></br>
-            pass:{state.passwordError} */}
           </button>
           <span className={Styles.link}>Criar conta</span>
           <FormStatus />
