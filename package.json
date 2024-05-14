@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --hot",
     "start": "webpack-dev-server --open",
+    "build": "webpack --config webpack.config.js",
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
