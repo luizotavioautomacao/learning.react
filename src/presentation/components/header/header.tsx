@@ -6,7 +6,7 @@ const Header: React.FC = () => {
   return (
     <header className={Styles.header}>
       <Logo />
-      <h1>gotech.education</h1>
+      <h1>Fantasy Football</h1>
     </header>
   );
 };

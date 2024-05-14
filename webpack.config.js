@@ -1,6 +1,6 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path')
- 
+
 module.exports = {
   mode: 'development',
   entry: './src/main/index.tsx',
@@ -32,19 +32,24 @@ module.exports = {
       }, {
         loader: 'sass-loader'
       }]
+    }, {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader',
+        'postcss-loader', 'sass-loader'
+      ],
     }]
   },
   devServer: {
-    port:4200,
+    port: 4200,
     static: './public',
     devMiddleware: {
       writeToDisk: true,
     },
-    historyApiFallback:{
+    historyApiFallback: {
       rewrites: [
         { from: /./, to: '/index.html' }
       ]
-  },
+    },
   },
   externals: {
     react: 'React',
