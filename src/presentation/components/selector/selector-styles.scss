@@ -1,17 +1,19 @@
 @import '../../../presentation/styles/colors.scss';
+@import '../../../presentation/styles/global.scss';
 
 .selectorBox {
-    // background-color: $white;
-    // padding: 20px;
-    // display: flex;
+    background-color: $subbackground;
+    padding: 20px;
+    display: flex;
+    margin: 0 auto;
+    border: 1px solid;
+    min-width: 50%;
+    margin-bottom: 30px;
+    margin-top: 40px;
+    border-radius: $borderRadius
+    
+    // width: 50%;
+    // flex-direction: row; 
     // justify-content: center;
     // align-items: center;
-    // flex-direction: row;
-    // margin: 0 auto;
-    // border: 0px solid;
-    // width: 50%;
-    // min-width: 50%;
-    // margin-bottom: 30px;
-    // margin-top: 40px;
-    // border-radius: 0.25rem;
 }

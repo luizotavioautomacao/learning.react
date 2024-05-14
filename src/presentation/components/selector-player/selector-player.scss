@@ -1,0 +1,17 @@
+@import '../../../presentation/styles/colors.scss';
+@import '../../../presentation/styles/global.scss';
+
+.container {
+    display: flex;
+    height: 150px; /* Defina a altura da div pai */
+  }
+
+.selectPlayer {
+    background-color: $table;
+    border-radius: $borderRadius;
+    border: 1px solid;
+    flex: 1; 
+    margin-bottom: 20px;
+    display: flex;
+}
+

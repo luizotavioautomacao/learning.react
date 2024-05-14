@@ -1,5 +1,6 @@
 import React, { useContext, useState, PropsWithChildren, useEffect } from "react";
 import ContextState from '@/presentation/contexts/tests/test1-context';
+import Styles from './selector-table-styles.scss'
 import { DfsSlatePlayer, League, LeagueList } from "@/presentation/test/league-test1";
 import { FilterState } from "@/presentation/pages/test-totem/test1";
 import { SetFilter } from "../select/select";
@@ -50,7 +51,7 @@ export const TableSelector = ({
     // className="grid grid-cols-12 gap-4"
     >
       <div
-      // className={`col-span-10 ${Styles.tableBox} bg-gray-950 text-white`}
+      className={`col-span-10 ${Styles.tableBox}`}
       >
         <div
         // className="overflow-x-auto"
@@ -58,7 +59,7 @@ export const TableSelector = ({
           <table
             className="table-auto w-full"
           >
-            <thead>
+            <thead className={`${Styles.titleTable}`}>
               <tr>
                 <th
                   className="px-2 py-2"
@@ -77,28 +78,6 @@ export const TableSelector = ({
                 >Points</th>
               </tr>
             </thead>
-            {/* <tbody>
-              {filter.playersPage && filter.playersPage.map(
-                (item: DfsSlatePlayer) => (
-                  <tr key={item.slateId}>
-                    <td
-                      className="px-1 py-1"
-                    >{item.operatorPlayerName}</td>
-                    <td
-                      className="px-1 py-1"
-                    >{item.team}</td>
-                    <td
-                      className="px-1 py-1"
-                    >{item.operatorPosition}</td>
-                    <td
-                      className="px-1 py-1"
-                    >{item.operatorSalary}</td>
-                    <td
-                      className="px-1 py-1"
-                    >{item.fantasyPoints ? item.fantasyPoints : 0}</td>
-                  </tr>
-                ))}
-            </tbody> */}
             <tbody>
               {filter.playersPage && filter.playersPage.map(
                 (player) => (
@@ -116,7 +95,7 @@ export const TableSelector = ({
                       className="px-1 py-1"
                     >{player.operatorSalary}</td>
                     <td
-                      className="px-1 py-1"
+                      className="px-1 py-1" style={{paddingLeft:"10px"}}
                     >{player.fantasyPoints ? player.fantasyPoints : 0}</td>
                   </tr>
                 ))}

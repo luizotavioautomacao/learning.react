@@ -1,8 +1,6 @@
 @import '../styles/colors.scss';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+$borderRadius: 0.25rem;
 
 * {
     font-family: "Roboto", sans-serif;

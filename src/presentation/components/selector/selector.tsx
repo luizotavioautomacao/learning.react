@@ -16,7 +16,9 @@ export const selectName = [
 const Selector = ({ data }: PropsWithChildren<Props>) => {
 
   return (
-    <div className={Styles.selectorBox} >
+    <div
+      className={Styles.selectorBox}
+    >
       {selectName.map((selectDefault) => (
         <Select key={selectDefault} data={data}>
           {selectDefault}

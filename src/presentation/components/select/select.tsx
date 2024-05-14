@@ -92,7 +92,7 @@ export const Select = ({
   return (
     <div>
       <select
-        className={`${Styles.selectorBox} bg-gray-950 text-white`}
+        className={`${Styles.selectorBox}`}
         id="optionId"
         name="value"
         value={selected.value}
