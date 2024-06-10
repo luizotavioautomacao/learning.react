@@ -1,24 +1,11 @@
 import React from "react";
 import { RenderResult, fireEvent, render } from "@testing-library/react";
 import Login from "./login";
-import { ValidationSpy } from "@/presentation/test";
+import { AuthenticationSpy, ValidationSpy } from "@/presentation/test";
 import { inputGetStatus } from "@/presentation/components/input/input";
-import {
-  AuthenticationParams,
-  IAuthentication,
-} from "@/domain/usecases/authentication";
-import { AccountModel } from "@/domain/model/account-model";
-import { mockAccountModel, mockEmail, mockPassword } from "@/domain/test/mock-account";
+import { mockEmail, mockPassword } from "@/domain/test/mock-account";
 
-class AuthenticationSpy implements IAuthentication {
-  account: AccountModel = mockAccountModel();
-  params: AuthenticationParams;
 
-  async auth(params: AuthenticationParams): Promise<AccountModel> {
-    this.params = params;
-    return Promise.resolve(this.account);
-  }
-}
 
 type SutTypes = {
   authenticationSpy: AuthenticationSpy;
