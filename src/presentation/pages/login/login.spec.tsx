@@ -3,9 +3,25 @@ import { RenderResult, fireEvent, render } from "@testing-library/react";
 import Login from "./login";
 import { ValidationSpy } from "@/presentation/test";
 import { inputGetStatus } from "@/presentation/components/input/input";
+import {
+  AuthenticationParams,
+  IAuthentication,
+} from "@/domain/usecases/authentication";
+import { AccountModel } from "@/domain/model/account-model";
+import { mockAccountModel, mockEmail, mockPassword } from "@/domain/test/mock-account";
+
+class AuthenticationSpy implements IAuthentication {
+  account: AccountModel = mockAccountModel();
+  params: AuthenticationParams;
+
+  async auth(params: AuthenticationParams): Promise<AccountModel> {
+    this.params = params;
+    return Promise.resolve(this.account);
+  }
+}
 
 type SutTypes = {
-  // authenticationSpy: AuthenticationSpy
+  authenticationSpy: AuthenticationSpy;
   // setCurrentAccountMock: (account: Authentication.Model) => void
   sut: RenderResult;
   validationSpy: ValidationSpy;
@@ -16,13 +32,14 @@ type SutParams = {
 };
 
 const makeSut = (params?: SutParams): SutTypes => {
-  // const authenticationSpy = new AuthenticationSpy()
+  const authenticationSpy = new AuthenticationSpy();
   const validationSpy = new ValidationSpy();
   validationSpy.errorMessage = params?.validationError;
-  const sut = render(<Login validation={validationSpy} />);
+  const sut = render(<Login validation={validationSpy} authentication={authenticationSpy} />);
   return {
     sut,
     validationSpy,
+    authenticationSpy
   };
   // const validationStub = new ValidationStub()
   // validationStub.errorMessage = params?.validationError
@@ -124,8 +141,24 @@ describe("Login Component", () => {
     const passwordInput = sut.getByTestId("password");
     fireEvent.input(passwordInput, { target: { value: "any_password" } });
     const submitButton = sut.getByTestId("submit") as HTMLButtonElement;
-    fireEvent.click(submitButton)
-    const spinner = sut.getByTestId('spinner')
-    expect(spinner).toBeTruthy()
+    fireEvent.click(submitButton);
+    const spinner = sut.getByTestId("spinner");
+    expect(spinner).toBeTruthy();
+  });
+
+  test("Should call Authent ication with correct values", () => {
+    const { sut, authenticationSpy } = makeSut();
+    const emailInput = sut.getByTestId("email");
+    const email = mockEmail
+    fireEvent.input(emailInput, { target: { value: email } });
+    const passwordInput = sut.getByTestId("password");
+    const password = mockPassword
+    fireEvent.input(passwordInput, { target: { value: password } });
+    const submitButton = sut.getByTestId("submit") as HTMLButtonElement;
+    fireEvent.click(submitButton);
+    expect(authenticationSpy.params).toEqual({
+      email: email,
+      password: password,
+    });
   });
 });
