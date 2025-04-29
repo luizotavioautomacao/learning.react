@@ -6,8 +6,8 @@ const Spinner: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='/' Component={Login} />
         <Route path="/login" Component={Login} />
-        {/* <Route path='/' Component={Login} /> */}
       </Routes>
     </BrowserRouter>
   );

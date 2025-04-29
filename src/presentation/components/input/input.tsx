@@ -2,11 +2,9 @@ import React, { useContext } from "react";
 import Styles from "./input-styles.scss";
 import Context from '@/presentation/contexts/form/form-context'
 
-type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+export const validStatus = "Ok!"
 
-export const inputGetStatus = (): string => {
-  return '[x]'
-}
+type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 const Input: React.FC<Props> = (props: Props) => {
 
@@ -25,11 +23,11 @@ const Input: React.FC<Props> = (props: Props) => {
   }
 
   const getStatus = (): string => {
-    return error? '[x]': '[v]'
+    return error? '🔴': '🟢'
   }
 
   const getTitle = (): string => {
-    return error
+    return error || validStatus
   }
   
   return (

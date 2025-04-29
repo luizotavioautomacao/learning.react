@@ -5,38 +5,37 @@ import Context from "@/presentation/contexts/form/form-context";
 import { IValidation } from "@/presentation/protocols/validation";
 import { IAuthentication } from "@/domain/usecases/authentication";
 
-const log = true;
 type Props = {
   validation?: IValidation;
   authentication: IAuthentication;
 };
 
+type StateLogin = {
+  isLoading: boolean,
+  email: string,
+  password: string,
+  errorMessage: string,
+  emailError: string,
+  passwordError: string,
+}
+
 const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
-  const [state, setState] = useState({
+  const [state, setState] = useState<StateLogin>({
     isLoading: false,
     email: "",
     password: "",
     errorMessage: "",
-    emailError: "Campo obrigatório",
-    passwordError: "Campo obrigatório",
+    emailError: "",
+    passwordError: "",
   });
 
   useEffect(() => {
-    // log ? console.log(1, state) : null
     setState({
       ...state,
       emailError: validation?.validate("email", state.email),
       passwordError: validation?.validate("password", state.password),
     });
-  }, [state.email]);
-
-  useEffect(() => {
-    // log ? console.log(2, state) : null
-    setState({
-      ...state,
-      passwordError: validation?.validate("password", state.password),
-    });
-  }, [state.password]);
+  }, [state.email,state.password]);
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>

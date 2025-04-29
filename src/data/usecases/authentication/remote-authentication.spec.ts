@@ -1,11 +1,11 @@
-import { mockAccountModel, mockAuthentication } from "../../../domain/test/mock-account"
-import { InvalidCredentialsError } from "../../../domain/errors/invalid-credencials-error"
-import { UnexpectedError } from "../../../domain/errors/unexpected-error"
-import { HttpClientSpy } from "../../../data/test/mock-http-client"
-import { RemoteAuthentication } from "./../../../data/usecases/authentication/remote-authentication"
-import { HttpStatusCode } from "../../../data/protocols/http/http-response"
-import { AccountModel } from "../../../domain/model/account-model"
-import { AuthenticationParams } from "../../../domain/usecases/authentication"
+import { mockAccountModel, mockAuthentication } from "@/domain/test/mock-account"
+import { InvalidCredentialsError } from "@/domain/errors/invalid-credencials-error"
+import { UnexpectedError } from "@/domain/errors/unexpected-error"
+import { HttpClientSpy } from "@/data/test/mock-http-client"
+import { RemoteAuthentication } from "@/data/usecases/authentication/remote-authentication"
+import { HttpStatusCode } from "@/data/protocols/http/http-response"
+import { AccountModel } from "@/domain/model/account-model"
+import { AuthenticationParams } from "@/domain/usecases/authentication"
 import { faker } from '@faker-js/faker'
 
 type SutTypes = {
