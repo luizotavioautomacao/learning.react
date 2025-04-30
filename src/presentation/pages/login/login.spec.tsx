@@ -1,6 +1,7 @@
 import React from "react";
+import 'jest-localstorage-mock';
 import Login from "./login";
-import { RenderResult, fireEvent, render, waitFor } from "@testing-library/react";
+import { RenderResult, fireEvent, render, waitFor, cleanup } from "@testing-library/react";
 import { AuthenticationSpy, ValidationSpy } from "@/presentation/test";
 import { mockEmail, mockPassword } from "@/domain/test/mock-account";
 import { validStatus } from "@/presentation/components/input/input";
@@ -87,6 +88,10 @@ const simulateStatusField = (sut: RenderResult, fieldName: string, validationErr
 // }
 
 describe("Login Component", () => {
+  afterEach(cleanup);
+  beforeEach(()=>{
+    localStorage.clear()
+  });
 
   test("Should not render spinner and error on start", () => {
     const { sut } = makeSut({ validationError });
@@ -200,6 +205,13 @@ describe("Login Component", () => {
     fireEvent.submit(sut.getByTestId('form'));
     expect(mainError.textContent).toBe(error.message);
     expect(errorWrap.childElementCount).toBe(2); // error-wrap tem dois filhos, nesse caso somente 
+  });
+
+  test("Should add acessToken to localstorage on success", async () => {
+    const { sut, authenticationSpy } = makeSut();
+    simulateValidSubmit(sut);
+    await waitFor(() => { sut.getByTestId('form') });
+    expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken);
   });
 
 });
