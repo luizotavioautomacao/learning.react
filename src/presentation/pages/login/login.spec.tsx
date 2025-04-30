@@ -1,11 +1,13 @@
 import React from "react";
 import 'jest-localstorage-mock';
+import { MemoryRouter } from 'react-router-dom';
 import Login from "./login";
 import { RenderResult, fireEvent, render, waitFor, cleanup } from "@testing-library/react";
 import { AuthenticationSpy, ValidationSpy } from "@/presentation/test";
 import { mockEmail, mockPassword } from "@/domain/test/mock-account";
 import { validStatus } from "@/presentation/components/input/input";
 import { InvalidCredentialsError } from "@/domain/errors/invalid-credencials-error";
+// import { createMemoryHistory } from "history";
 
 const statusDefault = '🔴';
 const statusValid = '🟢';
@@ -22,12 +24,17 @@ type SutParams = {
   validationError: string
 }
 
+// const history = createMemoryHistory();
 const makeSut = (params?: SutParams): SutTypes => {
 
   const authenticationSpy = new AuthenticationSpy();
   const validationSpy = new ValidationSpy();
   validationSpy.errorMessage = params?.validationError;
-  const sut = render(<Login validation={validationSpy} authentication={authenticationSpy} />);
+  const sut = render(
+    <MemoryRouter>
+      <Login validation={validationSpy} authentication={authenticationSpy} />
+    </MemoryRouter>
+  );
 
   return {
     sut,
@@ -213,5 +220,13 @@ describe("Login Component", () => {
     await waitFor(() => { sut.getByTestId('form') });
     expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken);
   });
+
+  test("Should go to signup page",()=>{
+    const { sut } = makeSut();
+    const register = sut.getByTestId('signup');
+    fireEvent.click(register);
+    // expect(history.length).toBe(2);
+    // expect(history.location.pathname).toBe('/signup');
+  })
 
 });
