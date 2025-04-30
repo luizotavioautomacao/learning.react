@@ -1,9 +1,10 @@
 import React from "react";
 import Login from "./login";
-import { RenderResult, fireEvent, render } from "@testing-library/react";
+import { RenderResult, fireEvent, render, waitFor } from "@testing-library/react";
 import { AuthenticationSpy, ValidationSpy } from "@/presentation/test";
 import { mockEmail, mockPassword } from "@/domain/test/mock-account";
 import { validStatus } from "@/presentation/components/input/input";
+import { InvalidCredentialsError } from "@/domain/errors/invalid-credencials-error";
 
 const statusDefault = '🔴';
 const statusValid = '🟢';
@@ -176,7 +177,7 @@ describe("Login Component", () => {
   test("Should call Authentication only once", () => {
     const { sut, authenticationSpy } = makeSut();
     simulateValidSubmit(sut);
-    simulateValidSubmit(sut);
+    simulateValidSubmit(sut); // apertar 2x o botão de submit
     expect(authenticationSpy.callsCount).toBe(1);
   });
 
@@ -186,6 +187,19 @@ describe("Login Component", () => {
     populatePasswordlField(sut);
     fireEvent.submit(sut.getByTestId('form'))
     expect(authenticationSpy.callsCount).toBe(0);
+  });
+
+  test("Should present error if Authentication fails", async () => {
+    const { sut, authenticationSpy } = makeSut();
+    const error = new InvalidCredentialsError();
+    jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error));
+    simulateValidSubmit(sut);
+    const errorWrap = sut.getByTestId("error-wrap");
+    await waitFor(() => { errorWrap }) // depois do submit foi necessário esperar renderizar a tela novamente
+    const mainError = sut.getByTestId('main-error');
+    fireEvent.submit(sut.getByTestId('form'));
+    expect(mainError.textContent).toBe(error.message);
+    expect(errorWrap.childElementCount).toBe(2); // error-wrap tem dois filhos, nesse caso somente 
   });
 
 });
