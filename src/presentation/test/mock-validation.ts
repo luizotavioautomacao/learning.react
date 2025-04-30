@@ -2,11 +2,11 @@ import { IValidation } from "@/presentation/protocols/validation"
 
 export class ValidationSpy implements IValidation {
     errorMessage: string
-    fildName: string
+    fieldName: string
     fieldValue: string
 
-    validate(fildName: string, fieldValue: string): string {
-        this.fildName = fildName
+    validate(fieldName: string, fieldValue: string): string {
+        this.fieldName = fieldName
         this.fieldValue = fieldValue
         return this.errorMessage
     }
