@@ -5,9 +5,11 @@ import { AuthenticationParams, IAuthentication } from "@/domain/usecases/authent
 export class AuthenticationSpy implements IAuthentication {
     account: AccountModel = mockAccountModel();
     params: AuthenticationParams;
+    callsCount: number = 0
   
     async auth(params: AuthenticationParams): Promise<AccountModel> {
       this.params = params;
+      this.callsCount++;
       return Promise.resolve(this.account);
     }
   }
