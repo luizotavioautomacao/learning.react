@@ -12,7 +12,7 @@ describe("MinLengthValidation", () => {
         expect(error).toEqual(new InvalidFieldError())
     });
 
-    test("Should return falsy if value is email is valid", () => {
+    test("Should return falsy if value is valid", () => {
         const sut = makeSut();
         const error = sut.validate(faker.string.alphanumeric(5));
         expect(error).toBeFalsy();

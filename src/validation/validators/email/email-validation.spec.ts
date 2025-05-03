@@ -14,10 +14,17 @@ describe("EmailValidation", () => {
         expect(error).toEqual(new InvalidFieldError())
     });
 
-    test("Should return false if field is email is valid", () => {
+    test("Should return false if field is valid email", () => {
         const sut = makeSut();
         const error = sut.validate(faker.internet.email());
         expect(error).toBeFalsy();
     });
+
+    test("Should return false if field is email empty", () => {
+        const sut = makeSut();
+        const error = sut.validate(faker.internet.email());
+        expect(error).toBeFalsy();
+    });
+
 
 });
