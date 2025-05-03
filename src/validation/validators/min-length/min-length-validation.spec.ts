@@ -8,13 +8,13 @@ describe("MinLengthValidation", () => {
 
     test("Should return error if value is invalid", () => {
         const sut = makeSut();
-        const error = sut.validate('1234');
+        const error = sut.validate(faker.string.alphanumeric(4));
         expect(error).toEqual(new InvalidFieldError())
     });
 
     test("Should return falsy if value is email is valid", () => {
         const sut = makeSut();
-        const error = sut.validate('12345');
+        const error = sut.validate(faker.string.alphanumeric(5));
         expect(error).toBeFalsy();
     });
 
