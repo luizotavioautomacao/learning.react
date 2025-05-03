@@ -8,14 +8,14 @@ describe("MinLengthValidation", () => {
 
     test("Should return error if value is invalid", () => {
         const sut = makeSut();
-        const error = sut.validate('value');
+        const error = sut.validate('1234');
         expect(error).toEqual(new InvalidFieldError())
     });
 
-    // test("Should return false if field is email is valid", () => {
-    //     const sut = makeSut();
-    //     const error = sut.validate(faker.internet.email());
-    //     expect(error).toBeFalsy();
-    // });
+    test("Should return falsy if value is email is valid", () => {
+        const sut = makeSut();
+        const error = sut.validate('12345');
+        expect(error).toBeFalsy();
+    });
 
 });
