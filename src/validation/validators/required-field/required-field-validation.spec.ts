@@ -1,16 +1,10 @@
-import { RequiredFieldError } from "@/validation/errors/requried-field-error";
+import { RequiredFieldError } from "@/validation/errors/required-field-error";
 import { RequiredFieldValidation } from "@/validation/validators/required-field/required-field-validation";
 import { faker } from '@faker-js/faker';
 
 const makeSut = (): RequiredFieldValidation => new RequiredFieldValidation(faker.database.column());
 
 describe("RequiredFieldValidation", () => {
-
-    // afterEach(cleanup);
-
-    beforeEach(() => {
-        localStorage.clear()
-    });
 
     test("Should return error if field is empty", () => {
         const sut = makeSut();
