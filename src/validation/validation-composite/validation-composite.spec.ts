@@ -5,7 +5,8 @@ import { faker } from '@faker-js/faker';
 const makeSut = (): ValidationComposite => {
     const fieldValidationSpy = new FieldValidationSpy('any_field');
     const fieldValidationSpy2 = new FieldValidationSpy('any_field');
-    fieldValidationSpy2.error = new Error('any_error_message');
+    fieldValidationSpy.error = new Error('any_first_error_message');
+    fieldValidationSpy2.error = new Error('any_second_error_message');
     
     return new ValidationComposite([
         fieldValidationSpy,
@@ -18,7 +19,7 @@ describe("ValidationComposite", () => {
     test("Should return error if any validation fails", () => {
         const sut = makeSut();
         const error = sut.validate('any_field', 'any_value');
-        expect(error).toBe('any_error_message');
+        expect(error).toBe('any_first_error_message');
     });
 
     // test("Should return false if field is valid email", () => {
