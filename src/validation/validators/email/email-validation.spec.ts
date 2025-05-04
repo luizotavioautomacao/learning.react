@@ -26,5 +26,4 @@ describe("EmailValidation", () => {
         expect(error).toBeFalsy();
     });
 
-
 });
