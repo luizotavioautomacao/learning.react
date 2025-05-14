@@ -1,5 +1,5 @@
 import { ValidationComposite } from '@/validation/validation-composite/validation-composite';
-import { FieldValidationSpy } from '@/validation/validators/test/mock-field-validation';
+import { FieldValidationSpy } from '@/validation/test/mock-field-validation';
 import { faker } from '@faker-js/faker';
 
 const errorMessage1 = faker.string.uuid();
